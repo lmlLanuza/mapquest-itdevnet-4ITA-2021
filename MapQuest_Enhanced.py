@@ -3,6 +3,10 @@ from tkinter import ttk
 from tkinter import *
 import urllib.parse
 import requests
+import sys
+import os
+
+
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "YXcZ6xIdAdBfJEijDlGasOPJoGrqf9GV"  
 root= tk.Tk() 
@@ -29,12 +33,13 @@ canvas1.create_window(270, 50, window=entry1)
 canvas1.create_window(270, 100, window=entry2)
 
 
+
 def button():
+    #gets values and translates
     global destination
     global location
     location = entry1.get()
     destination = entry2.get()
-  # You should use your own key 
     while True:
         url = main_api + urllib.parse.urlencode({"key":key, "from":location, "to":destination})
         print ("URL ", (url))
@@ -75,14 +80,25 @@ def button():
             Label5 = tk.Label(root, text= argument5, bg='yellow')
             canvas1.create_window(700, 100, window=Label5)
         break
-def remove_text():
-    Label2.config(text="")
 
 
-# Create Delete Button
 
-button2 = tk.Button (root, text='Clear',command=remove_text, bg='orange')
-canvas1.create_window(270,190, window=button2)
+def clear():
+    #clears all values
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
+
+
+ButtonClear=Button(root, text="Clear", command=clear, bg='orange')
+canvas1.create_window(270,230, window=ButtonClear)
+
+
+#Closes the Program
+button_quit = Button(root, text="Quit", command=root.destroy, bg='orange')
+canvas1.create_window(270,190, window=button_quit)
+
+#Submits the Values
 button1 = tk.Button (root, text='Find your Destination',command=button, bg='orange') # button to call the 'values' command above 
 canvas1.create_window(270,150, window=button1)
 
