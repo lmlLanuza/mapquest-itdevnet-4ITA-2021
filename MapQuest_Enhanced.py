@@ -32,7 +32,15 @@ entry2 = tk.Entry (root)
 canvas1.create_window(270, 50, window=entry1)
 canvas1.create_window(270, 100, window=entry2)
 
+#Two radio buttons to select unit of measurement
+#Variable that will store the selected value of chosen Radio button
+selected = tk.StringVar()
 
+metric = tk.Radiobutton(root, text = "Metric", variable = selected, value = "metric")
+canvas1.create_window(200, 150, window=metric)
+
+imperial = tk.Radiobutton(root, text = "Imperial", variable = selected, value = "imperial")
+canvas1.create_window(207, 180, window=imperial)
 
 def button():
     #gets values and translates
@@ -89,20 +97,16 @@ def clear():
     os.execl(python, python, * sys.argv)
 
 
+#Submits the Values
+button1 = tk.Button (root, text='Find your Destination',command=button, bg='orange', width = 20) # button to call the 'values' command above 
+canvas1.create_window(270,220, window=button1)
 
-ButtonClear=Button(root, text="Clear", command=clear, bg='orange')
-canvas1.create_window(270,230, window=ButtonClear)
-
+#Clears any input fields
+ButtonClear=Button(root, text="Clear", command=clear, bg='orange', width = 20)
+canvas1.create_window(270,270, window=ButtonClear)
 
 #Closes the Program
-button_quit = Button(root, text="Quit", command=root.destroy, bg='orange')
-canvas1.create_window(270,190, window=button_quit)
-
-#Submits the Values
-button1 = tk.Button (root, text='Find your Destination',command=button, bg='orange') # button to call the 'values' command above 
-canvas1.create_window(270,150, window=button1)
-
-
- 
+button_quit = Button(root, text="Quit", command=root.destroy, bg='orange', width = 20)
+canvas1.create_window(270,320, window=button_quit)
 
 root.mainloop()
