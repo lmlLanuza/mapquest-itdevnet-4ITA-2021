@@ -26,7 +26,7 @@ canvas1.create_window(100, 50, window=location)
 entry1 = tk.Entry (root)
 
 destination = tk.Label(root, text='Type your Destination: ')
-canvas1.create_window(90, 100, window=destination)
+canvas1.create_window(107, 100, window=destination)
 entry2 = tk.Entry (root)
 
 canvas1.create_window(270, 50, window=entry1)
@@ -37,10 +37,10 @@ canvas1.create_window(270, 100, window=entry2)
 selected = tk.StringVar()
 
 metric = tk.Radiobutton(root, text = "Metric", variable = selected, value = "metric")
-canvas1.create_window(200, 150, window=metric)
+canvas1.create_window(90, 150, window=metric)
 
 imperial = tk.Radiobutton(root, text = "Imperial", variable = selected, value = "imperial")
-canvas1.create_window(207, 180, window=imperial)
+canvas1.create_window(250, 150, window=imperial)
 
 def button():
     #gets values and translates
@@ -61,7 +61,7 @@ def button():
             +"\nFuel Used (Ltr): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78))\
             + "\n=============================================\n"
             Label1 = tk.Label(root, text= argument,font="Times 15")
-            canvas1.create_window(720, 100, window=Label1)
+            canvas1.create_window(900, 100, window=Label1)
             for each in json_data["route"]["legs"][0]["maneuvers"]:
                 argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
                 Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
@@ -71,14 +71,14 @@ def button():
             argument3 ="***Status Code: " + str(json_status) + "; Invalid user inputs for one or bothlocations."\
             +"***\n"
             Label3 = tk.Label(root, text= argument3, bg='yellow')
-            canvas1.create_window(700, 100, window=Label3)
+            canvas1.create_window(900, 50, window=Label3)
         
         elif json_status == 611:
             argument4 ="**********************************************"\
             + "Status Code: " + str(json_status) + "; Missing an entry for one or both locations."\
             +"**********************************************\n"
             Label4 = tk.Label(root, text= argument4, bg='yellow')
-            canvas1.create_window(700, 100, window=Label4)
+            canvas1.create_window(900, 50, window=Label4)
 
         else:
             argument5 ="************************************************************************"\
@@ -86,7 +86,7 @@ def button():
             + "https://developer.mapquest.com/documentation/directions-api/status-codes"\
             + "************************************************************************\n"   
             Label5 = tk.Label(root, text= argument5, bg='yellow')
-            canvas1.create_window(700, 100, window=Label5)
+            canvas1.create_window(900, 50, window=Label5)
         break
 
 
