@@ -34,13 +34,13 @@ canvas1.create_window(270, 100, window=entry2)
 
 #Two radio buttons to select unit of measurement
 #Variable that will store the selected value of chosen Radio button
-selected = tk.StringVar()
+selected = StringVar(value = "1")
 
 metric = tk.Radiobutton(root, text = "Metric", variable = selected, value = "metric")
-canvas1.create_window(200, 150, window=metric)
+canvas1.create_window(100, 140, window=metric)
 
 imperial = tk.Radiobutton(root, text = "Imperial", variable = selected, value = "imperial")
-canvas1.create_window(207, 180, window=imperial)
+canvas1.create_window(250, 140, window=imperial)
 
 def button():
     #gets values and translates
@@ -54,18 +54,30 @@ def button():
         json_data = requests.get(url).json()
         json_status = json_data["info"]["statuscode"]
         if json_status == 0:
-            argument = "\nAPI Status: " + str(json_status) + " = A successful route call.\n"\
+            if(selected.get() == "metric"):
+                argument = "\nAPI Status: " + str(json_status) + " = A successful route call.\n"\
+                "============================================="+ "\nDirections from " + (location) + " to " + (destination)\
+                +"\nTrip Duration: " + (json_data["route"]["formattedTime"])\
+                +"\nKilometers: " + str("{:.2f}".format(json_data["route"]["distance"] * 1.6))\
+                +"\nFuel Used (Ltr): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78))\
+                + "\n=============================================\n"
+                Label1 = tk.Label(root, text= argument,font="Times 15")
+                canvas1.create_window(720, 100, window=Label1)
+                for each in json_data["route"]["legs"][0]["maneuvers"]:
+                    argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
+                    Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
+            else:
+                argument = "\nAPI Status: " + str(json_status) + " = A successful route call.\n"\
             "============================================="+ "\nDirections from " + (location) + " to " + (destination)\
             +"\nTrip Duration: " + (json_data["route"]["formattedTime"])\
-            +"\nKilometers: " + str("{:.2f}".format(json_data["route"]["distance"] * 1.6))\
-            +"\nFuel Used (Ltr): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78))\
+            +"\nMile: " + str("{:.2f}".format(json_data["route"]["distance"]))\
+            +"\nFuel Used (Gal): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]))\
             + "\n=============================================\n"
             Label1 = tk.Label(root, text= argument,font="Times 15")
             canvas1.create_window(720, 100, window=Label1)
             for each in json_data["route"]["legs"][0]["maneuvers"]:
                 argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
                 Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
-               
             
         elif json_status == 402:
             argument3 ="***Status Code: " + str(json_status) + "; Invalid user inputs for one or bothlocations."\
@@ -99,14 +111,14 @@ def clear():
 
 #Submits the Values
 button1 = tk.Button (root, text='Find your Destination',command=button, bg='orange', width = 20) # button to call the 'values' command above 
-canvas1.create_window(270,220, window=button1)
+canvas1.create_window(270,180, window=button1)
 
 #Clears any input fields
 ButtonClear=Button(root, text="Clear", command=clear, bg='orange', width = 20)
-canvas1.create_window(270,270, window=ButtonClear)
+canvas1.create_window(270,220, window=ButtonClear)
 
 #Closes the Program
 button_quit = Button(root, text="Quit", command=root.destroy, bg='orange', width = 20)
-canvas1.create_window(270,320, window=button_quit)
+canvas1.create_window(270,260, window=button_quit)
 
 root.mainloop()
