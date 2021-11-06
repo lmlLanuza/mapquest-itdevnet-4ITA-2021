@@ -34,7 +34,8 @@ canvas1.create_window(270, 100, window=entry2)
 
 #Two radio buttons to select unit of measurement
 #Variable that will store the selected value of chosen Radio button
-selected = tk.StringVar(value = "1")
+
+selected = StringVar(value = "1")
 
 metric = tk.Radiobutton(root, text = "Metric", variable = selected, value = "metric")
 canvas1.create_window(100, 140, window=metric)
