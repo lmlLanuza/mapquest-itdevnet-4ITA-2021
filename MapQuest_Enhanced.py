@@ -9,6 +9,7 @@ import os
 
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "YXcZ6xIdAdBfJEijDlGasOPJoGrqf9GV"  
+attempts = 1
 root= tk.Tk() 
 root.geometry("1500x1000")
 
@@ -19,7 +20,7 @@ canvas1 = tk.Canvas(main_frame)
 canvas1.pack(side=LEFT, fill=BOTH, expand=1)
 
 second_frame = tk.Frame(canvas1)
-canvas1.create_window((170,200), window=second_frame, anchor="nw")
+canvas1.create_window((500,200), window=second_frame, anchor="nw")
 
 location = tk.Label(root, text='Type your Location: ')
 canvas1.create_window(100, 50, window=location)
@@ -47,6 +48,7 @@ def button():
     #gets values and translates
     global destination
     global location
+    global attempts
     location = entry1.get()
     destination = entry2.get()
     while True:
@@ -64,9 +66,18 @@ def button():
                 + "\n=============================================\n"
                 Label1 = tk.Label(root, text= argument,font="Times 15")
                 canvas1.create_window(900, 100, window=Label1)
-                for each in json_data["route"]["legs"][0]["maneuvers"]:
-                    argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
-                    Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
+                if attempts == 1:
+                    attempts = 2
+                    for each in json_data["route"]["legs"][0]["maneuvers"]:
+                        argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
+                        Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
+                else:
+                    for widgets in second_frame.winfo_children():
+                      widgets.destroy()
+                    for each in json_data["route"]["legs"][0]["maneuvers"]:
+                        argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
+                        Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
+
             else:
                 argument = "\nAPI Status: " + str(json_status) + " = A successful route call.\n"\
                 "============================================="+ "\nDirections from " + (location) + " to " + (destination)\
@@ -76,9 +87,19 @@ def button():
                 + "\n=============================================\n"
                 Label1 = tk.Label(root, text= argument,font="Times 15")
                 canvas1.create_window(900, 100, window=Label1)
-                for each in json_data["route"]["legs"][0]["maneuvers"]:
-                    argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
-                    Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
+                if attempts == 1:
+                    attempts = 2
+                    for each in json_data["route"]["legs"][0]["maneuvers"]:
+                        argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
+                        Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
+                else:
+                    for widgets in second_frame.winfo_children():
+                          widgets.destroy()
+                    for each in json_data["route"]["legs"][0]["maneuvers"]:
+                        argument2 = (each["narrative"]) + "(" + ("{:.2f}".format((each["distance"])*1.61) + " km)")
+                        Label2 = tk.Label(second_frame, text= argument2, font="Times 15",anchor='n').pack(fill='both')
+
+                    
             
         elif json_status == 402:
             argument3 ="***Status Code: " + str(json_status) + "; Invalid user inputs for one or both locations."\
