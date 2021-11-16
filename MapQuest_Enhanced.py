@@ -39,6 +39,7 @@ canvas1.create_window(270, 100, window=entry2)
 selected = StringVar(value = "1")
 
 metric = tk.Radiobutton(root, text = "Metric", variable = selected, value = "metric")
+metric.select()
 canvas1.create_window(100, 140, window=metric)
 
 imperial = tk.Radiobutton(root, text = "Imperial", variable = selected, value = "imperial")
